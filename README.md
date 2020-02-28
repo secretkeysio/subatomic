@@ -31,5 +31,5 @@ Do what you want with it. Anything Protonmail is copyright them.
 Hit me up on [Twitter](https://twitter.com/ryanmcgrath/) or [email me](mailto:ryan@rymc.io).
 
 ## Screenshots
-<img src="https://github.com/ryanmcgrath/subatomic/blob/trunk/assets/login.png?raw=true" width="160" />
-<img src="https://github.com/ryanmcgrath/subatomic/blob/trunk/assets/inbox.png?raw=true" width="160" />
+<img src="https://github.com/ryanmcgrath/subatomic/blob/trunk/login.png?raw=true" width="160" />
+<img src="https://github.com/ryanmcgrath/subatomic/blob/trunk/mailbox.png?raw=true" width="160" />
