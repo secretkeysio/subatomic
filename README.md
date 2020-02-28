@@ -1,4 +1,4 @@
-<img src="https://github.com/ryanmcgrath/subatomic/blob/trunk/assets/icon1024@2x.png?raw=true" width="60" />
+<img src="https://github.com/ryanmcgrath/subatomic/blob/trunk/assets/icon1024@2x.png?raw=true" width="160" />
 
 # Subatomic
 This is an experimental site browser/wrapper, built for macOS - which means menus, key commands and so on work as expected. The demo is built for Protonmail, since I was curious about the level of effort to turn it into a desktop client. It's built on [appkit-rs](https://github.com/ryanmcgrath/appkit-rs/), and if you wanted to, you could swap the icon and URL for whatever web property you want.
