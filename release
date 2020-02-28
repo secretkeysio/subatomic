@@ -1,0 +1,3 @@
+cargo bundle --release
+codesign -s "$PROFILE" --options=runtime --entitlements entitlements-release.plist target/release/bundle/osx/Subatomic.app
+./target/release/bundle/osx/Subatomic.app/Contents/MacOS/subatomic

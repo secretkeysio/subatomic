@@ -1,0 +1,28 @@
+[package]
+name = "subatomic"
+description = ""
+version = "0.1.0"
+authors = ["Ryan McGrath <ryan@rymc.io>"]
+edition = "2018"
+
+[dependencies]
+appkit = { path = "../appkit/appkit" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[package.metadata.bundle]
+name = "Subatomic"
+identifier = "com.secretkeys.subatomic"
+icon = ["assets/icon1024@2x.png"]
+version = "1.0.0"
+resources = ["Credits.html"]
+copyright = "This is an unofficial, demo app. Protonmail assets, logos and materials are copyright Proton Technologies 2020."
+category = "Developer Tool"
+short_description = "An example application."
+long_description = """
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut
+enim ad minim veniam, quis nostrud exercitation ullamco laboris
+nisi ut aliquip ex ea commodo consequat.
+"""
+osx_frameworks = []
