@@ -6,7 +6,6 @@ mod app;
 mod messages;
 mod menu;
 mod mailbox;
-mod window;
 
 fn main() {
     App::new(

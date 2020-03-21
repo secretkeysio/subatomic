@@ -3,16 +3,12 @@
 
 use serde::Deserialize;
 
-use appkit::prelude::*;
-use appkit::webview::action::{
-    NavigationAction, NavigationPolicy,
-    NavigationResponse, NavigationResponsePolicy,
-    OpenPanelParameters
-};
-use appkit::webview::config::InjectAt;
-use appkit::file_panel::{FileSelectPanel, FileSavePanel};
+use appkit::filesystem::{FileSelectPanel, FileSavePanel};
+use appkit::notifications::{NotificationCenter, Notification};
+use appkit::webview::{WebView, WebViewConfig, WebViewDelegate};
+use appkit::webview::actions::{NavigationAction, NavigationResponse, OpenPanelParameters};
+use appkit::webview::enums::{InjectAt, NavigationPolicy, NavigationResponsePolicy};
 
-use crate::app::Subatomic;
 use crate::messages::Message;
 
 #[derive(Debug, Default, Deserialize)]
@@ -21,48 +17,25 @@ pub struct NewMessageNotification {
     pub body: String
 }
 
-pub struct MailboxViewController {
-    pub view: WebView,
-    pub select_panel: FileSelectPanel
-}
+#[derive(Default)]
+pub struct Mailbox;
 
-impl Default for MailboxViewController {
-    fn default() -> Self {
-        let mut panel = FileSelectPanel::default();
-        panel.set_can_choose_files(true);
-
-        let vc = MailboxViewController {
-            view: WebView::default(),
-            select_panel: panel
-        };
-
-        vc.view.configure(&vc);
-        vc.view.add_user_script(include_str!("../scripts/styles.js"), InjectAt::Start, false);
-        vc.view.add_user_script(include_str!("../scripts/scripts.js"), InjectAt::Start, false);
-        vc.view.add_handler("notify");
-        vc.view.add_handler("updateTitle");
-
-        vc
+impl Mailbox {
+    pub fn config() -> WebViewConfig {
+        let mut config = WebViewConfig::default();
+        config.add_user_script(include_str!("../scripts/styles.js"), InjectAt::Start, false);
+        config.add_user_script(include_str!("../scripts/scripts.js"), InjectAt::Start, false);
+        config.add_handler("notify");
+        config.add_handler("updateTitle");
+        config 
     }
 }
 
-impl ViewWrapper for MailboxViewController {
-    fn get_handle(&self) -> Option<appkit::ShareId<appkit::Object>> {
-        self.view.get_handle()
+impl WebViewDelegate for Mailbox {
+    fn did_load(&mut self, view: WebView) {
+        view.load_url("https://beta.protonmail.com/"); 
     }
-}
 
-fn dispatch(message: Message) {
-    App::<Subatomic, Message>::dispatch(message);
-}
-
-impl ViewController for MailboxViewController {
-    fn did_load(&self) {
-        self.view.load_url("https://beta.protonmail.com/");
-    }
-}
-
-impl WebViewController for MailboxViewController {
     fn on_message(&self, title: &str, body: &str) {
         if title == "notify" {
             let msg: NewMessageNotification = serde_json::from_str(body).unwrap();
@@ -71,7 +44,7 @@ impl WebViewController for MailboxViewController {
         }
 
         if title == "updateTitle" {
-            dispatch(Message::UpdateTitle(body.to_string()));
+            Message::UpdateTitle(body.to_string()).dispatch();
         }
     }
 
@@ -107,7 +80,6 @@ impl WebViewController for MailboxViewController {
         panel.set_can_create_directories(true);
         panel.set_suggested_filename(suggested_filename);
         panel.show(move |path| {
-            println!("...?");
             handler(true, path);
         });
     }

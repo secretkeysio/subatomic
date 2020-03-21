@@ -1,11 +1,16 @@
 //! Messages that we used to thread control throughout the application. If you come from
 //! React/Redux, you can liken it to that world.
 
-//use appkit::app::Dispatchable;
+use appkit::app::App;
+use crate::app::Subatomic;
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub enum Message {
     UpdateTitle(String)
 }
 
-//impl Dispatchable for Message {}
+impl Message {
+    pub fn dispatch(self) {
+        App::<Subatomic, Message>::dispatch(self);
+    }
+}
