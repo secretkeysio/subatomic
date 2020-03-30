@@ -3,11 +3,13 @@
 
 use serde::Deserialize;
 
-use appkit::filesystem::{FileSelectPanel, FileSavePanel};
-use appkit::notifications::{NotificationCenter, Notification};
-use appkit::webview::{WebView, WebViewConfig, WebViewDelegate};
-use appkit::webview::actions::{NavigationAction, NavigationResponse, OpenPanelParameters};
-use appkit::webview::enums::{InjectAt, NavigationPolicy, NavigationResponsePolicy};
+use cacao::filesystem::{FileSelectPanel, FileSavePanel};
+use cacao::user_notifications::{NotificationCenter, Notification};
+use cacao::webview::{
+    WebView, WebViewConfig, WebViewDelegate,
+    NavigationAction, NavigationResponse, OpenPanelParameters,
+    InjectAt, NavigationPolicy, NavigationResponsePolicy
+};
 
 use crate::messages::Message;
 
@@ -32,7 +34,7 @@ impl Mailbox {
 }
 
 impl WebViewDelegate for Mailbox {
-    fn did_load(&mut self, view: WebView) {
+    fn did_load(&self, view: WebView) {
         view.load_url("https://beta.protonmail.com/"); 
     }
 

@@ -1,11 +1,12 @@
 //! Implements the basic app delegate.
 
-use appkit::app::{AppDelegate, Dispatcher};
-use appkit::layout::{Layout, LayoutConstraint};
-use appkit::notifications::{NotificationCenter, NotificationAuthOption};
-use appkit::view::View;
-use appkit::webview::WebView;
-use appkit::window::{Window, WindowConfig};
+use cacao::macos::app::AppDelegate;
+use cacao::notification_center::Dispatcher;
+use cacao::layout::{Layout, LayoutConstraint};
+use cacao::user_notifications::{NotificationCenter, NotificationAuthOption};
+use cacao::view::View;
+use cacao::webview::WebView;
+use cacao::macos::window::{Window, WindowConfig};
 
 use crate::messages::Message;
 use crate::menu::set_menu;

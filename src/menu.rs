@@ -1,7 +1,9 @@
 //! The top-level menu. This could realistically live anywhere, but it's long and unwieldy as a
 //! single block of code so it's extracted here.
 
-use appkit::prelude::*;
+use cacao::macos::{
+    app::App, menu::{Menu, MenuItem}
+};
 
 /// Installs the menu.
 pub fn set_menu() {
