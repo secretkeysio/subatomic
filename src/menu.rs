@@ -1,58 +1,57 @@
 //! The top-level menu. This could realistically live anywhere, but it's long and unwieldy as a
 //! single block of code so it's extracted here.
 
-use cacao::macos::{
-    app::App, menu::{Menu, MenuItem}
-};
+use cacao::appkit::App;
+use cacao::appkit::menu::{Menu, MenuItem};
 
 /// Installs the menu.
-pub fn set_menu() {
-    App::set_menu(vec![
+pub fn build_menu() -> Vec<Menu> {
+    vec![
         Menu::new("", vec![
-            MenuItem::about("Subatomic"),
+            MenuItem::About("Subatomic".into()),
             MenuItem::Separator,
-            MenuItem::action("Preferences").key(","),
+            MenuItem::new("Preferences").key(","),
             MenuItem::Separator,
-            MenuItem::services(),
+            MenuItem::Services,
             MenuItem::Separator,
-            MenuItem::hide(),
-            MenuItem::hide_others(),
-            MenuItem::show_all(),
+            MenuItem::Hide,
+            MenuItem::HideOthers,
+            MenuItem::ShowAll,
             MenuItem::Separator,
-            MenuItem::quit()
+            MenuItem::Quit
         ]),
 
         Menu::new("File", vec![
-            MenuItem::action("New Window").key("n"),
+            MenuItem::new("New Window").key("n"),
             MenuItem::Separator,
-            MenuItem::close_window(),
+            MenuItem::CloseWindow,
             MenuItem::Separator,
-            MenuItem::action("Export as PDF"),
-            MenuItem::action("Print")
+            MenuItem::new("Export as PDF"),
+            MenuItem::new("Print")
         ]),
 
         Menu::new("Edit", vec![
-            MenuItem::undo(),
-            MenuItem::redo(),
+            MenuItem::Undo,
+            MenuItem::Redo,
             MenuItem::Separator,
-            MenuItem::cut(),
-            MenuItem::copy(),
-            MenuItem::paste(),
+            MenuItem::Cut,
+            MenuItem::Copy,
+            MenuItem::Paste,
             MenuItem::Separator,
-            MenuItem::select_all()
+            MenuItem::SelectAll
         ]),
         
         Menu::new("View", vec![
-            MenuItem::enter_full_screen()
+            MenuItem::EnterFullScreen
         ]),
 
         Menu::new("Window", vec![
-            MenuItem::minimize(),
-            MenuItem::zoom(),
+            MenuItem::Minimize,
+            MenuItem::Zoom,
             MenuItem::Separator,
-            MenuItem::action("Bring All to Front")
+            MenuItem::new("Bring All to Front")
         ]),
 
         Menu::new("Help", vec![])
-    ]);
+    ]
 }

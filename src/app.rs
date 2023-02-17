@@ -1,15 +1,15 @@
 //! Implements the basic app delegate.
 
-use cacao::macos::app::AppDelegate;
+use cacao::appkit::{App, AppDelegate};
+use cacao::appkit::window::{Window, WindowConfig};
 use cacao::notification_center::Dispatcher;
 use cacao::layout::{Layout, LayoutConstraint};
 use cacao::user_notifications::{NotificationCenter, NotificationAuthOption};
 use cacao::view::View;
 use cacao::webview::WebView;
-use cacao::macos::window::{Window, WindowConfig};
 
 use crate::messages::Message;
-use crate::menu::set_menu;
+use crate::menu::build_menu;
 use crate::mailbox::Mailbox;
 
 pub struct Subatomic {
@@ -34,13 +34,14 @@ impl Default for Subatomic {
 
 impl AppDelegate for Subatomic {
     fn did_finish_launching(&self) {
-        set_menu();
+        App::set_menu(build_menu());
+        App::activate();
 
-        NotificationCenter::request_authorization(&[
+        /*NotificationCenter::request_authorization(&[
             NotificationAuthOption::Badge,
             NotificationAuthOption::Sound,
             NotificationAuthOption::Alert
-        ]);
+        ]);*/
         
         self.window.set_autosave_name("com.subatomic.mailbox");
         self.window.set_titlebar_appears_transparent(true);
@@ -58,19 +59,20 @@ impl AppDelegate for Subatomic {
             self.webview.bottom.constraint_equal_to(&self.view.bottom)
         ]);
 
-        self.window.show();
+        //self.window.show();
     }
 
     fn did_become_active(&self) {
-        NotificationCenter::remove_all_delivered_notifications();
         self.window.show();
+        //NotificationCenter::remove_all_delivered_notifications();
+        //self.window.show();
     }
 }
 
 impl Dispatcher for Subatomic {
     type Message = Message;
 
-    fn on_message(&self, message: Self::Message) {
+    fn on_ui_message(&self, message: Self::Message) {
         match message {
             Message::UpdateTitle(s) => self.window.set_title(&s)
         }

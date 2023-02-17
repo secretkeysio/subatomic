@@ -1,6 +1,6 @@
 //! Subatomic is a lightweight wrapper for the Protonmail web interface.
 
-use cacao::macos::app::App;
+use cacao::appkit::App;
 
 mod app;
 mod messages;

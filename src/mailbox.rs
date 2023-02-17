@@ -34,8 +34,10 @@ impl Mailbox {
 }
 
 impl WebViewDelegate for Mailbox {
-    fn did_load(&self, view: WebView) {
-        view.load_url("https://beta.protonmail.com/"); 
+    //const NAME: &'static str = "WebViewMailbox";
+
+    fn did_load(&mut self, view: WebView) {
+        view.load_url("https://mail.proton.me/"); 
     }
 
     fn on_message(&self, title: &str, body: &str) {
@@ -51,12 +53,13 @@ impl WebViewDelegate for Mailbox {
     }
 
     fn policy_for_navigation_action<F: Fn(NavigationPolicy)>(&self, action: NavigationAction, handler: F) {
-        let url = action.request.url();
+        handler(NavigationPolicy::Allow);
+        /*let url = action.request.url();
         
         handler(match url.starts_with("https://beta.protonmail.com/") || url.starts_with("blob:https://beta.protonmail.com/") {
             true => NavigationPolicy::Allow,
             false => NavigationPolicy::Cancel
-        });
+        });*/
     }
 
     fn policy_for_navigation_response<F: Fn(NavigationResponsePolicy)>(&self, response: NavigationResponse, handler: F) {
@@ -66,7 +69,7 @@ impl WebViewDelegate for Mailbox {
         });
     }
 
-    fn run_open_panel<F: Fn(Option<Vec<String>>) + 'static>(&self, _params: OpenPanelParameters, handler: F) {
+    /*fn run_open_panel<F: Fn(Option<Vec<String>>) + 'static>(&self, _params: OpenPanelParameters, handler: F) {
         let mut panel = FileSelectPanel::new();
         panel.set_can_choose_files(true);
         panel.show(move |paths| {
@@ -75,7 +78,7 @@ impl WebViewDelegate for Mailbox {
                 false => None
             });
         });
-    }
+    }*/
 
     fn run_save_panel<F: Fn(bool, Option<String>) + 'static>(&self, suggested_filename: &str, handler: F) {
         let mut panel = FileSavePanel::new();
